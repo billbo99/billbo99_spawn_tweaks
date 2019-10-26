@@ -1,0 +1,10 @@
+local Event = require('__stdlib__/stdlib/event/event').set_protected_mode(true)
+Spawn = require('spawn')
+
+Event.register(Event.core_events.init, Spawn.OnInit) 
+Event.register(Event.core_events.load, Spawn.OnLoad)
+Event.register(Event.core_events.on_configuration_changed, Spawn.OnConfigurationChanged)
+Event.register(defines.events.on_runtime_mod_setting_changed, Spawn.OnRuntimeModSettingChanged)
+Event.register(-1800, Spawn.OnTickDoCheckForSpawnGear)
+Event.register(defines.events.on_player_created, Spawn.OnPlayerCreated)
+Event.register(defines.events.on_player_respawned, Spawn.OnPlayerRespawned)

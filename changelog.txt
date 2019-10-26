@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.0.1
+Date: 2019-10-26
+  Features:
+    - Tracks guns / ammo / armor produced by players force and once threshold is reached players
+      will be spawned with highest tier after death
+    - There are primary and secondary guns and ammo that are tracked
+  Changes:
+  Bug fixes:
+  Info:
+---------------------------------------------------------------------------------------------------

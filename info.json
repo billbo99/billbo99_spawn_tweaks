@@ -1,0 +1,16 @@
+{
+    "name": "billbo99_spawn_tweaks",
+    "version": "0.0.1",
+    "title": "Factorio Spawn Tweaks by billbo99",
+    "author": "billbo99",
+    "contact": "",
+    "homepage": "https://mods.factorio.com/mod/billbo99_spawn_tweaks",
+    "factorio_version": "0.17",
+    "dependencies": [
+        "base >= 0.17.69",
+        "stdlib",
+        "(?)akimbo-weapons",
+        "(?)IndustrialRevolution"
+    ],
+    "description": "Tweaks to re-spawning get given; ammo / guns / armor if you have made enough already.  Also allow changing corpse decay timing for players / biters since they are also death related."
+}
