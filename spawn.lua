@@ -1,8 +1,7 @@
 local Event = require('__stdlib__/stdlib/event/event').set_protected_mode(true)
 
 local Spawn = {}
-local Actions = require("modules/default/actions")
-local Func = require("utils/func")
+local Checks = { primary_gun={}, secondary_gun={}, primary_ammo={}, secondary_ammo={}, armor={} }
 
 -- helper function
 local function starts_with(str, start)
@@ -52,39 +51,65 @@ function Spawn.OnPlayerRespawned(event)
 end
 
 -- Once a minute check to see what has been made and change the default spawn gear 
-function Spawn.OnTickDoCheckForSpawnGear()
-    Checks = {
-        -- primary_gun
-        primary_gun_001={priority=001, what_type='primary_gun', what='pistol', what_name='Pistol'},
-        primary_gun_002={priority=100, what_type='primary_gun', what='submachine-gun', what_name='Submachine Gun'},
-        -- primary_ammo
-        primary_ammo_001={priority=001, what_type='primary_ammo', what='firearm-magazine', what_name='Firearms rounds magazine'},
-        primary_ammo_002={priority=100, what_type='primary_ammo', what='piercing-rounds-magazine', what_name='Piercing rounds magazine'},
-        primary_ammo_003={priority=200, what_type='primary_ammo', what='uranium-ammo', what_name='Uranium rounds magazine'},
-        -- secondary_gun
-        secondary_gun_001={priority=001, what_type='secondary_gun', what='flamethrower', what_name='Flame Thrower'},
-        secondary_gun_002={priority=100, what_type='secondary_gun', what='rocket-launcher', what_name='Rocket Launcher'},
-        -- secondary_ammo
-        secondary_ammo_001={priority=001, what_type='secondary_ammo', what='flamethrower-ammo', what_name='Flame Thrower ammo'},
-        secondary_ammo_002={priority=100, what_type='secondary_ammo', what='rocket', what_name='Rocket'},
-        secondary_ammo_003={priority=200, what_type='secondary_ammo', what='explosive-rocket', what_name='Explosive Rocket'},
-        secondary_ammo_003={priority=300, what_type='secondary_ammo', what='atomic-rocket', what_name='Atomic Rocket'},
-        -- armor
-        armor_001={priority=001, what_type='armor', what='light-armor', what_name='Light Armor'},
-        armor_002={priority=100, what_type='armor', what='heavy-armor', what_name='Heavy Armor'},
-        armor_003={priority=200, what_type='armor', what='modular-armor', what_name='Modular Armor'},
-        armor_004={priority=300, what_type='armor', what='power-armor', what_name='Power Armor'},
-        armor_005={priority=400, what_type='armor', what='power-armor-mk2', what_name='Power Armor MK2'},
-    }
+function InitCheckList()
+    if not Checks then Checks = { primary_gun={}, secondary_gun={}, primary_ammo={}, secondary_ammo={}, armor={} } end
 
-    if game.active_mods["IndustrialRevolution"] then
-        -- ammo
-        Checks.primary_ammo_001={priority=001, what_type='ammo', what='copper-magazine', what_name='Copper Magazine'}
-        Checks.primary_ammo_002={priority=100, what_type='ammo', what='iron-magazine', what_name='Iron Magazine'}
-        Checks.primary_ammo_003={priority=200, what_type='ammo', what='steel-magazine', what_name='Steel Magazine'}
-        Checks.primary_ammo_004={priority=300, what_type='ammo', what='titanium-magazine', what_name='Titanium Magazine'}
-        Checks.primary_ammo_005={priority=400, what_type='ammo', what='uranium-magazine', what_name='Uranium Magazine'}
+    for i=1,1000 do
+        Checks.primary_gun[i] = {}
+        Checks.primary_ammo[i] = {}
+        Checks.secondary_gun[i] = {}
+        Checks.secondary_ammo[i] = {}
+        Checks.armor[i] = {}
     end
+
+    Checks.primary_gun[001] = {what_type='primary_gun', what='pistol', what_name='Pistol', done=false}
+    Checks.primary_gun[100] = {what_type='primary_gun', what='submachine-gun', what_name='Submachine Gun', done=false}
+
+    Checks.primary_ammo[001] = {what_type='primary_ammo', what='firearm-magazine', what_name='Firearms rounds magazine', done=false}
+    Checks.primary_ammo[100] = {what_type='primary_ammo', what='piercing-rounds-magazine', what_name='Piercing rounds magazine', done=false}
+    Checks.primary_ammo[200] = {what_type='primary_ammo', what='uranium-rounds-magazine', what_name='Uranium rounds magazine', done=false}
+
+    Checks.secondary_gun[001] = {what_type='secondary_gun', what='shotgun', what_name='Shotgun', done=false}
+    Checks.secondary_gun[100] = {what_type='secondary_gun', what='flamethrower', what_name='Flame Thrower', done=false}
+    Checks.secondary_gun[200] = {what_type='secondary_gun', what='combat-shotgun', what_name='Combat Shotgun', done=false}
+    Checks.secondary_gun[300] = {what_type='secondary_gun', what='rocket-launcher', what_name='Rocket Launcher', done=false}
+
+    Checks.secondary_ammo[001] = {what_type='secondary_ammo', what='shotgun-shell', what_name='Shotgun shells', done=false}
+    Checks.secondary_ammo[100] = {what_type='secondary_ammo', what='flamethrower-ammo', what_name='Flame Thrower ammo', done=false}
+    Checks.secondary_ammo[200] = {what_type='secondary_ammo', what='piercing-shotgun-shell', what_name='Piercing Shotgun shells', done=false}
+    Checks.secondary_ammo[300] = {what_type='secondary_ammo', what='rocket', what_name='Rocket', done=false}
+    Checks.secondary_ammo[400] = {what_type='secondary_ammo', what='explosive-rocket', what_name='Explosive Rocket', done=false}
+    Checks.secondary_ammo[500] = {what_type='secondary_ammo', what='atomic-rocket', what_name='Atomic Rocket', done=false}
+
+    Checks.armor[001] = {what_type='armor', what='light-armor', what_name='Light Armor', done=false}
+    Checks.armor[100] = {what_type='armor', what='heavy-armor', what_name='Heavy Armor', done=false}
+    Checks.armor[200] = {what_type='armor', what='modular-armor', what_name='Modular Armor', done=false}
+    Checks.armor[300] = {what_type='armor', what='power-armor', what_name='Power Armor', done=false}
+    Checks.armor[400] = {what_type='armor', what='power-armor-mk2', what_name='Power Armor MK2', done=false}
+
+    if game and game.active_mods["IndustrialRevolution"] then
+        Checks.primary_ammo[001] = {what_type='ammo', what='copper-magazine', what_name='Copper Magazine', done=false}
+        Checks.primary_ammo[100] = {what_type='ammo', what='iron-magazine', what_name='Iron Magazine', done=false}
+        Checks.primary_ammo[200] = {what_type='ammo', what='steel-magazine', what_name='Steel Magazine', done=false}
+        Checks.primary_ammo[300] = {what_type='ammo', what='titanium-magazine', what_name='Titanium Magazine', done=false}
+        Checks.primary_ammo[400] = {what_type='ammo', what='uranium-magazine', what_name='Uranium Magazine', done=false}
+    end
+
+    if game and game.active_mods["akimbo-weapons"] then
+        Checks.primary_gun[050] = {what_type='primary_gun', what='apistol', what_name='Akimbo Pistol', done=false}
+        Checks.primary_gun[150] = {what_type='primary_gun', what='asmg', what_name='Akimbo Submachine Gun', done=false}
+
+        Checks.secondary_gun[050] = {what_type='secondary_gun', what='ashotgun', what_name='Akimbo Shotgun', done=false}
+        Checks.secondary_gun[250] = {what_type='secondary_gun', what='acombat-shotgun', what_name='Akimbo Combat Shotgun', done=false}
+    end
+
+    return Checks
+
+end
+
+
+function Spawn.OnTickDoCheckForSpawnGear(event)
+    if not Checks then Checks = InitCheckList() end
 
     global.SpawnItems.primary_gun_threshold = settings.global["billbo99-primary_gun_threshold"].value
     global.SpawnItems.secondary_gun_threshold = settings.global["billbo99-secondary_gun_threshold"].value
@@ -95,13 +120,15 @@ function Spawn.OnTickDoCheckForSpawnGear()
     flag = false
     for k, force in pairs(game.forces) do
         produced = force["item_production_statistics"].input_counts
-        for k, v in pairs(Checks) do
-            if produced[v.what] and produced[v.what] > global.SpawnItems[v.what_type .. '_threshold'] then
-                if v.priority > global.SpawnItems[v.what_type .. '_priority'] then
-                    global.SpawnItems[v.what_type] = v.what
-                    global.SpawnItems[v.what_type .. '_name'] = v.what_name
-                    global.SpawnItems[v.what_type .. '_priority'] = v.priority
-                    flag = true
+        for k1, v1 in pairs(Checks) do
+            for k2, v2 in pairs(Checks[k1]) do
+                if produced[v2.what] and produced[v2.what] > global.SpawnItems[v2.what_type .. '_threshold'] then
+                    if global.SpawnItems[v2.what_type] ~= v2.what then
+                        global.SpawnItems[v2.what_type] = v2.what
+                        global.SpawnItems[v2.what_type .. '_name'] = v2.what_name
+                        Checks[k1][k2] = nil
+                        flag = true
+                    end
                 end
             end
         end
@@ -120,9 +147,12 @@ end
 -- Init the mod
 function Spawn.OnInit()
     log("Spawn.OnInit")
+
     global.print_colour = {r=255, g=255, b=0}
     global.SpawnItems = global.SpawnItems or {}
-    
+
+    global.SpawnItems.Checks = InitCheckList()
+
     global.SpawnItems.primary_gun = global.SpawnItems.primary_gun or nil
     global.SpawnItems.primary_gun_name = global.SpawnItems.primary_gun_name or nil
     global.SpawnItems.primary_gun_priority = global.SpawnItems.primary_gun_priority or 0
@@ -143,7 +173,7 @@ function Spawn.OnInit()
     global.SpawnItems.armor_name = global.SpawnItems.armor_name or nil
     global.SpawnItems.armor_priority = global.SpawnItems.armor_priority or 0
 
-    if game.active_mods["IndustrialRevolution"] then
+    if game and game.active_mods["IndustrialRevolution"] then
         if global.SpawnItems.ammo == "firearm-magazine" then 
             global.SpawnItems.ammo = "copper-magazine" 
             global.SpawnItems.ammo_name = "Copper Magazine" 
@@ -157,6 +187,7 @@ end
 -- Register default commands
 function Spawn.OnLoad()
     log("Spawn.OnLoad")
+    Checks = global.SpawnItems.Checks or InitCheckList()
 end
 
 function Spawn.OnConfigurationChanged(event)

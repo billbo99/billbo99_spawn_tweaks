@@ -1,4 +1,28 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.3
+Date: 2019-11-01
+  Features:
+  Changes:
+  Bug fixes:
+    - Messages still repeating when they shouldnt (still)
+  Info:
+---------------------------------------------------------------------------------------------------
+Version: 0.0.3
+Date: 2019-11-01
+  Features:
+  Changes:
+  Bug fixes:
+    - Messages still repeating when they shouldnt
+  Info:
+---------------------------------------------------------------------------------------------------
+Version: 0.0.2
+Date: 2019-11-01
+  Features:
+  Changes:
+  Bug fixes:
+    - Repeating a message every minute,  not when the condition has changed.
+  Info:
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Version: 0.0.1
 Date: 2019-10-26
   Features:

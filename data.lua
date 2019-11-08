@@ -4,8 +4,7 @@ local biter_corpse_time = settings.startup['billbo99-biter_corpse_life'].value *
 local player_corpse_time = settings.startup['billbo99-player_corpse_life'].value * 60 * 60
 
 for _, corpse in pairs(data.raw['corpse']) do
-    log(serpent.block(corpse))
-    if corpse.time_before_removed == 54000 then
+    if corpse.time_before_removed == 54000 and corpse.subgroup == 'corpses' then
         corpse.time_before_removed = biter_corpse_time
     end
 end
