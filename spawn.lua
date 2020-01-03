@@ -11,7 +11,6 @@ end
 
 -- Flush the players inventory
 function Spawn.ClearPlayerInventories(player)
-    player.get_main_inventory().clear()
     player.get_inventory(defines.inventory.character_ammo).clear()
     player.get_inventory(defines.inventory.character_guns).clear()
 end
@@ -20,21 +19,12 @@ end
 function Spawn.OnPlayerCreated(event)
     local player = game.get_player(event.player_index)
 
-    if game.active_mods["IndustrialRevolution"] then
-        -- do nothing IR gives its own starting inventory
-    else
-        Spawn.ClearPlayerInventories(player)
-        if settings.get_player_settings(player)["billbo99-respawn-with-primary_gun"] and global.SpawnItems["primary_gun"] then player.insert {name = global.SpawnItems["primary_gun"], count = 1} end
-        if settings.get_player_settings(player)["billbo99-respawn-with-primary_ammo"] and global.SpawnItems["primary_ammo"] then player.insert {name = global.SpawnItems["primary_ammo"], count = settings.global["billbo99-primary_ammo_starting_amount"].value} end
-        if settings.get_player_settings(player)["billbo99-respawn-with-secondary_gun"] and global.SpawnItems["secondary_gun"] then player.insert {name = global.SpawnItems["secondary_gun"], count = 1} end
-        if settings.get_player_settings(player)["billbo99-respawn-with-secondary_ammo"] and global.SpawnItems["secondary_ammo"] then player.insert {name = global.SpawnItems["secondary_ammo"], count = settings.global["billbo99-secondary_ammo_starting_amount"].value} end
-        if settings.get_player_settings(player)["billbo99-respawn-with-armor"] and global.SpawnItems["armor"] then player.insert {name = global.SpawnItems["armor"], count = 1} end
-    
-        player.insert {name = "iron-plate", count = 8}
-        player.insert {name = "wood", count = 1}
-        player.insert {name = "burner-mining-drill", count = 1}
-        player.insert {name = "stone-furnace", count = 1}
-    end
+    Spawn.ClearPlayerInventories(player)
+    if settings.get_player_settings(player)["billbo99-respawn-with-primary_gun"] and global.SpawnItems["primary_gun"] then player.insert {name = global.SpawnItems["primary_gun"], count = 1} end
+    if settings.get_player_settings(player)["billbo99-respawn-with-primary_ammo"] and global.SpawnItems["primary_ammo"] then player.insert {name = global.SpawnItems["primary_ammo"], count = settings.global["billbo99-primary_ammo_starting_amount"].value} end
+    if settings.get_player_settings(player)["billbo99-respawn-with-secondary_gun"] and global.SpawnItems["secondary_gun"] then player.insert {name = global.SpawnItems["secondary_gun"], count = 1} end
+    if settings.get_player_settings(player)["billbo99-respawn-with-secondary_ammo"] and global.SpawnItems["secondary_ammo"] then player.insert {name = global.SpawnItems["secondary_ammo"], count = settings.global["billbo99-secondary_ammo_starting_amount"].value} end
+    if settings.get_player_settings(player)["billbo99-respawn-with-armor"] and global.SpawnItems["armor"] then player.insert {name = global.SpawnItems["armor"], count = 1} end
 end
 
 -- On respawn
@@ -79,29 +69,21 @@ function InitCheckList()
     Checks.secondary_ammo[200] = {what_type='secondary_ammo', what='piercing-shotgun-shell', what_name='Piercing Shotgun shells', done=false}
     Checks.secondary_ammo[300] = {what_type='secondary_ammo', what='rocket', what_name='Rocket', done=false}
     Checks.secondary_ammo[400] = {what_type='secondary_ammo', what='explosive-rocket', what_name='Explosive Rocket', done=false}
-    Checks.secondary_ammo[500] = {what_type='secondary_ammo', what='atomic-rocket', what_name='Atomic Rocket', done=false}
+    -- Checks.secondary_ammo[500] = {what_type='secondary_ammo', what='atomic-rocket', what_name='Atomic Rocket', done=false}
 
     Checks.armor[001] = {what_type='armor', what='light-armor', what_name='Light Armor', done=false}
     Checks.armor[100] = {what_type='armor', what='heavy-armor', what_name='Heavy Armor', done=false}
-    Checks.armor[200] = {what_type='armor', what='modular-armor', what_name='Modular Armor', done=false}
-    Checks.armor[300] = {what_type='armor', what='power-armor', what_name='Power Armor', done=false}
-    Checks.armor[400] = {what_type='armor', what='power-armor-mk2', what_name='Power Armor MK2', done=false}
+    -- Checks.armor[200] = {what_type='armor', what='modular-armor', what_name='Modular Armor', done=false}
+    -- Checks.armor[300] = {what_type='armor', what='power-armor', what_name='Power Armor', done=false}
+    -- Checks.armor[400] = {what_type='armor', what='power-armor-mk2', what_name='Power Armor MK2', done=false}
 
-    if game and game.active_mods["IndustrialRevolution"] then
-        Checks.primary_ammo[001] = {what_type='ammo', what='copper-magazine', what_name='Copper Magazine', done=false}
-        Checks.primary_ammo[100] = {what_type='ammo', what='iron-magazine', what_name='Iron Magazine', done=false}
-        Checks.primary_ammo[200] = {what_type='ammo', what='steel-magazine', what_name='Steel Magazine', done=false}
-        Checks.primary_ammo[300] = {what_type='ammo', what='titanium-magazine', what_name='Titanium Magazine', done=false}
-        Checks.primary_ammo[400] = {what_type='ammo', what='uranium-magazine', what_name='Uranium Magazine', done=false}
-    end
+    -- if game and game.active_mods["akimbo-weapons"] then
+    --     Checks.primary_gun[050] = {what_type='primary_gun', what='apistol', what_name='Akimbo Pistol', done=false}
+    --     Checks.primary_gun[150] = {what_type='primary_gun', what='asmg', what_name='Akimbo Submachine Gun', done=false}
 
-    if game and game.active_mods["akimbo-weapons"] then
-        Checks.primary_gun[050] = {what_type='primary_gun', what='apistol', what_name='Akimbo Pistol', done=false}
-        Checks.primary_gun[150] = {what_type='primary_gun', what='asmg', what_name='Akimbo Submachine Gun', done=false}
-
-        Checks.secondary_gun[050] = {what_type='secondary_gun', what='ashotgun', what_name='Akimbo Shotgun', done=false}
-        Checks.secondary_gun[250] = {what_type='secondary_gun', what='acombat-shotgun', what_name='Akimbo Combat Shotgun', done=false}
-    end
+    --     Checks.secondary_gun[050] = {what_type='secondary_gun', what='ashotgun', what_name='Akimbo Shotgun', done=false}
+    --     Checks.secondary_gun[250] = {what_type='secondary_gun', what='acombat-shotgun', what_name='Akimbo Combat Shotgun', done=false}
+    -- end
 
     return Checks
 
