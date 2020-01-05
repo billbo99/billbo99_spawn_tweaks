@@ -14,7 +14,7 @@ data:extend(
         { name = "billbo99-secondary_ammo_threshold", type = "int-setting", default_value = 50, setting_type = "runtime-global", order = "0250" },
         { name = "billbo99-secondary_ammo_starting_amount", type = "int-setting", default_value = 20, setting_type = "runtime-global", order = "0260" },
         { name = "billbo99-armor_threshold", type = "int-setting", default_value = 15, setting_type = "runtime-global", order = "0300" },
-        -- startup 
+        -- startup
         { name = "billbo99-player_corpse_life", type = "int-setting", default_value = 15, setting_type = "startup", order = "0100" },
         { name = "billbo99-biter_corpse_life", type = "int-setting", default_value = 5, setting_type = "startup", order = "0200" },
     }

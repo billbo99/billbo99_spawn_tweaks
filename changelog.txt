@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.7
+Date: 2020-01-05
+  Features:
+  Changes:
+    - Dependency on STDLIB removed
+    - Used .luacheckrc to do some code syntax checks to make Muppet happy.
+  Bug fixes:
+  Info:
+---------------------------------------------------------------------------------------------------
 Version: 0.0.6
 Date: 2020-01-03
   Features:
