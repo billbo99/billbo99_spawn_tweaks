@@ -17,18 +17,23 @@ function Spawn.GiveGear(event)
     local player = game.get_player(event.player_index)
 
     Spawn.ClearPlayerInventories(player)
+
     if settings.get_player_settings(player)["billbo99-respawn-with-primary_gun"] and global.SpawnItems["primary_gun"] then
         player.insert {name = global.SpawnItems["primary_gun"], count = 1}
     end
+
     if settings.get_player_settings(player)["billbo99-respawn-with-primary_ammo"] and global.SpawnItems["primary_ammo"] then
         player.insert {name = global.SpawnItems["primary_ammo"], count = settings.global["billbo99-primary_ammo_starting_amount"].value}
     end
+
     if settings.get_player_settings(player)["billbo99-respawn-with-secondary_gun"] and global.SpawnItems["secondary_gun"] then
         player.insert {name = global.SpawnItems["secondary_gun"], count = 1}
     end
+
     if settings.get_player_settings(player)["billbo99-respawn-with-secondary_ammo"] and global.SpawnItems["secondary_ammo"] then
         player.insert {name = global.SpawnItems["secondary_ammo"], count = settings.global["billbo99-secondary_ammo_starting_amount"].value}
     end
+
     if settings.get_player_settings(player)["billbo99-respawn-with-armor"] and global.SpawnItems["armor"] then
         player.insert {name = global.SpawnItems["armor"], count = 1}
     end
@@ -197,6 +202,39 @@ function Spawn.OnRuntimeModSettingChanged(event)
     global.SpawnItems.primary_ammo_threshold = settings.global["billbo99-primary_ammo_threshold"].value
     global.SpawnItems.secondary_ammo_threshold = settings.global["billbo99-secondary_ammo_threshold"].value
     global.SpawnItems.armor_threshold = settings.global["billbo99-armor_threshold"].value
+end
+
+function Spawn.Recalculate(event)
+    local player = game.get_player(event.player_index)
+    if not player.admin then
+        player.print("Your not an admin")
+        return
+    end
+
+    Checks = InitCheckList()
+    Spawn.OnTickDoCheckForSpawnGear()
+end
+
+function Spawn.Reprint(event)
+    local player = game.get_player(event.player_index)
+
+    local list = {}
+    if global.SpawnItems.armor_name then
+        table.insert(list, global.SpawnItems.armor_name)
+    end
+    if global.SpawnItems.primary_gun_name then
+        table.insert(list, global.SpawnItems.primary_gun_name)
+    end
+    if global.SpawnItems.primary_ammo_name then
+        table.insert(list, global.SpawnItems.primary_ammo_name)
+    end
+    if global.SpawnItems.secondary_gun_name then
+        table.insert(list, global.SpawnItems.secondary_gun_name)
+    end
+    if global.SpawnItems.secondary_ammo_name then
+        table.insert(list, global.SpawnItems.secondary_ammo_name)
+    end
+    player.print("Clones will now receive the following on respawn; " .. table.concat(list, ", "), global.print_colour)
 end
 
 return Spawn

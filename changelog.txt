@@ -5,6 +5,7 @@ Date: 2020-01-05
   Changes:
     - Dependency on STDLIB removed
     - Used .luacheckrc to do some code syntax checks to make Muppet happy.
+    - Added some commands triggers for debugging purposes
   Bug fixes:
   Info:
 ---------------------------------------------------------------------------------------------------
