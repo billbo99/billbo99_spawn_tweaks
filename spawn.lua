@@ -42,13 +42,13 @@ end
 function Spawn.OnPlayerCreated(event)
     local player = game.get_player(event.player_index)
     Spawn.GiveGear(event)
-    player.print({"messages.billbo99-welcome"}, global.print_colour)
+    player.print(settings.global["billbo99-welcome"].value, global.print_colour)
 end
 
 function Spawn.OnPlayerRespawned(event)
     local player = game.get_player(event.player_index)
     Spawn.GiveGear(event)
-    player.print({"messages.billbo99-respawn"}, global.print_colour)
+    player.print(settings.global["billbo99-respawn"].value, global.print_colour)
 end
 
 -- Once a minute check to see what has been made and change the default spawn gear
