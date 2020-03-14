@@ -116,6 +116,16 @@ local function InitCheckList()
         Checks.secondary_gun[25] = {what_type = "secondary_gun", what = "acombat-shotgun", what_name = "Akimbo Combat Shotgun", done = false}
     end
 
+    if game and game.active_mods["Krastorio2"] then
+        Checks.primary_ammo[5] = {what_type = "primary_ammo", what = "rifle-magazine", what_name = "Rifle magazine", done = false}
+        Checks.primary_ammo[15] = {what_type = "primary_ammo", what = "armor-piercing-rifle-magazine", what_name = "Armor piercing rifle magazine", done = false}
+        Checks.primary_ammo[25] = {what_type = "primary_ammo", what = "uranium-rifle-magazine", what_name = "Uranium rifle magazine", done = false}
+
+        Checks.secondary_gun[5] = {what_type = "secondary_gun", what = "anti-material-rifle", what_name = "Anti-material rifle", done = false}
+        Checks.secondary_ammo[5] = {what_type = "secondary_ammo", what = "anti-material-rifle-magazine", what_name = "Anti-material rifle magazine", done = false}
+        Checks.secondary_ammo[6] = {what_type = "secondary_ammo", what = "armor-piercing-anti-material-rifle-magazine", what_name = "Armor piercing anti-material rifle magazine", done = false}
+    end
+
     return Checks
 end
 
