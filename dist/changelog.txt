@@ -1,4 +1,18 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.0
+Date: 2020-08-28
+  Changes:
+    - Removed deathcounter code and made 'Death_Counter' an external mod dependency
+    - Added setting to allow increasing Spawn delay timerwith each death, with cooldown value to reduce it back to normal over time.
+    - Added setting to allow the adjustment of the damage tint applied to the screen when being attacked
+    - Added setting to allow the speed at which healing occurs
+    - Added setting to control how quickly healing kicks in after combat is over
+---------------------------------------------------------------------------------------------------
+Version: 0.3.0
+Date: 14. 08. 2020
+  Changes:
+    - Some checks needed after 1.0.0 was released
+---------------------------------------------------------------------------------------------------
 Version: 0.1.2
 Date: 14. 03. 2020
   Changes:
