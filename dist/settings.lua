@@ -9,6 +9,7 @@ data:extend(
         {name = "billbo99-respawn-with-capsule", type = "bool-setting", default_value = "true", setting_type = "runtime-per-user", order = "0400"},
         -- runtime-global
         {name = "billbo99-get-starting-gear", type = "bool-setting", default_value = "true", setting_type = "runtime-global", order = "0010"},
+        {name = "billbo99-extra-respawn-gear", type = "string-setting", default_value = "", allow_blank = true, setting_type = "runtime-global", order = "0020"},
         {name = "billbo99-primary_gun_threshold", type = "int-setting", default_value = 15, setting_type = "runtime-global", order = "0100"},
         {name = "billbo99-primary_ammo_threshold", type = "int-setting", default_value = 50, setting_type = "runtime-global", order = "0150"},
         {name = "billbo99-primary_ammo_starting_amount", type = "int-setting", default_value = 20, setting_type = "runtime-global", order = "0160"},

@@ -2,18 +2,18 @@ local Spawn = {}
 
 -- helper function
 
--- local function split(source, delimiters)
---     local elements = {}
---     local pattern = "([^" .. delimiters .. "]+)"
---     string.gsub(
---         source,
---         pattern,
---         function(value)
---             elements[#elements + 1] = value
---         end
---     )
---     return elements
--- end
+local function split(source, delimiters)
+    local elements = {}
+    local pattern = "([^" .. delimiters .. "]+)"
+    string.gsub(
+        source,
+        pattern,
+        function(value)
+            elements[#elements + 1] = value
+        end
+    )
+    return elements
+end
 
 -- local function getKeysSortedByValue(tbl, sortFunction)
 --     local keys = {}
@@ -403,8 +403,18 @@ function Spawn.OnPlayerRespawned(event)
     Spawn.OnTickDoCheckForSpawnGear()
 
     Spawn.GiveGear(event)
+
+    if settings.global["billbo99-extra-respawn-gear"].value then
+        local items = split(settings.global["billbo99-extra-respawn-gear"].value, " +")
+        for _, item in pairs(items) do
+            local parts = split(item, ":")
+            if game.item_prototypes[parts[1]] and type(tonumber(parts[2])) == "number" then
+                player.insert {name = parts[1], count = tonumber(parts[2])}
+            end
+        end
+    end
+
     player.print(settings.global["billbo99-respawn"].value, global.print_colour)
-    -- player.print(string.format("You have died .. %d .. time(s) .. /DeathCountStats .. for some fun stats", DeathCountSummary(player.name)))
 end
 
 function Spawn.OnTickDoCoolDown()

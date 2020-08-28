@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.1
+Date: 2020-08-28
+  Changes:
+    - Added an option to set what additional items are given on respawn (admin only can change this)
+---------------------------------------------------------------------------------------------------
 Version: 1.0.0
 Date: 2020-08-28
   Changes:
