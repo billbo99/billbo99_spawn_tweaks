@@ -15,32 +15,9 @@ local function split(source, delimiters)
     return elements
 end
 
--- local function getKeysSortedByValue(tbl, sortFunction)
---     local keys = {}
---     for key in pairs(tbl) do
---         table.insert(keys, key)
---     end
-
---     table.sort(
---         keys,
---         function(a, b)
---             return sortFunction(tbl[a], tbl[b])
---         end
---     )
---     return keys
--- end
-
 local function starts_with(str, start)
     return str:sub(1, #start) == start
 end
-
--- local function DeathCountSummary(PlayerName)
---     local total = 0
---     for _, count in pairs(global.SpawnItems.DeathCount[PlayerName] or {}) do
---         total = total + count
---     end
---     return total
--- end
 
 -- Flush the players ammo / gun inventory
 function Spawn.ClearPlayerInventories(player)
@@ -212,7 +189,7 @@ end
 
 function Spawn.OnConfigurationChanged(e)
     if e.mod_changes and e.mod_changes["billbo99_spawn_tweaks"] then
-        global.SpawnTimer = global.SpawnTimer or {}
+        Spawn.OnInit()
     end
 end
 
@@ -248,8 +225,6 @@ function Spawn.OnInit()
     global.SpawnItems.armor = global.SpawnItems.armor or nil
     global.SpawnItems.armor_name = global.SpawnItems.armor_name or nil
     global.SpawnItems.armor_priority = global.SpawnItems.armor_priority or 0
-
-    Spawn.OnLoad()
 end
 
 -- Register default commands
@@ -304,33 +279,6 @@ function Spawn.Reprint(event)
     player.print("Clones will now receive the following on respawn; " .. table.concat(list, ", "), global.print_colour)
 end
 
--- function Spawn.OnPlayerDied(event)
---     local PlayerName = game.get_player(event.player_index).name
-
---     local cause = "reasons unknown"
---     if event.cause then
---         cause = event.cause.name
---     end
-
---     if cause == "character" then
---         if event.cause.player and event.cause.player.name then
---             if event.cause.player.name == PlayerName then
---                 cause = "suicide"
---             else
---                 cause = "player/" .. event.cause.player.name
---             end
---         end
---     end
-
---     if not global.SpawnItems.DeathCount[PlayerName] then
---         global.SpawnItems.DeathCount[PlayerName] = {}
---     end
---     if not global.SpawnItems.DeathCount[PlayerName][cause] then
---         global.SpawnItems.DeathCount[PlayerName][cause] = 0
---     end
---     global.SpawnItems.DeathCount[PlayerName][cause] = global.SpawnItems.DeathCount[PlayerName][cause] + 1
--- end
-
 function Spawn.RespawnTime(event)
     local player = game.get_player(event.player_index)
     local params = event.parameter
@@ -349,46 +297,6 @@ function Spawn.RespawnTime(event)
         game.print(string.format("%s current respawn timers is set at %d seconds", target_player.name, math.ceil(global.SpawnTimer[target_player.name] / 60)))
     end
 end
-
--- function Spawn.DeathCountStats(event)
---     local player = game.get_player(event.player_index)
---     local params = event.parameter
-
---     -- If param sent assume we are given a player name to search for
---     local target_player = player
---     if params then
---         for _, p in pairs(game.players) do
---             if p.name == params then
---                 target_player = p
---             end
---         end
---     end
-
---     local PlayerName = target_player.name
---     local sortedKeys =
---         getKeysSortedByValue(
---         global.SpawnItems.DeathCount[PlayerName] or {},
---         function(a, b)
---             return a > b
---         end
---     )
-
---     game.print(string.format("Player %s has died %d time(s) to the following causes", PlayerName, DeathCountSummary(PlayerName)))
---     for _, key in ipairs(sortedKeys) do
---         local msg
---         if key == "suicide" then
---             msg = string.format("[img=entity.character] (suicide) -- %d", global.SpawnItems.DeathCount[PlayerName][key])
---         elseif key == "reasons unknown" then
---             msg = string.format("reasons unknown -- %d", global.SpawnItems.DeathCount[PlayerName][key])
---         elseif starts_with(key, "player") then
---             msg = string.format("[img=entity.character] (%s) -- %d", split(key, "/")[2], global.SpawnItems.DeathCount[PlayerName][key])
---         else
---             msg = string.format("[img=entity.%s] -- %d", key, global.SpawnItems.DeathCount[PlayerName][key])
---         end
-
---         game.print(msg)
---     end
--- end
 
 function Spawn.OnPlayerCreated(event)
     local player = game.get_player(event.player_index)

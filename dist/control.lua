@@ -36,6 +36,7 @@ script.on_nth_tick(1800, Spawn.OnTickDoCheckForSpawnGear)
 script.on_nth_tick(60, Spawn.OnTickDoCoolDown)
 script.on_configuration_changed(OnConfigurationChanged)
 
+script.on_event(defines.events.on_cutscene_cancelled, OnStartup)
 script.on_event(defines.events.on_player_died, Spawn.OnPlayerDied)
 script.on_event(defines.events.on_player_created, Spawn.OnPlayerCreated)
 script.on_event(defines.events.on_player_respawned, Spawn.OnPlayerRespawned)
