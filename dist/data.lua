@@ -1,3 +1,6 @@
+require "prototypes.style"
+require "prototypes.sounds"
+
 local biter_corpse_time = settings.startup["billbo99-biter_corpse_life"].value * 60 * 60
 local player_corpse_time = settings.startup["billbo99-player_corpse_life"].value * 60 * 60
 

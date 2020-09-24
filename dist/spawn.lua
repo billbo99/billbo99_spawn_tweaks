@@ -1,3 +1,4 @@
+local Gui = require("scripts.gui")
 local Spawn = {}
 
 -- helper function
@@ -198,6 +199,8 @@ function Spawn.OnInit()
     global.print_colour = {r = 255, g = 255, b = 0}
     global.SpawnTimer = global.SpawnTimer or {}
     global.SpawnItems = global.SpawnItems or {}
+    global.queue = global.queue or {}
+    global.surprise = global.surprise or {flag = false, chance = 10}
 
     -- global.SpawnItems.DeathCount = {}
     global.SpawnItems.Checks = InitCheckList()
@@ -336,7 +339,7 @@ function Spawn.OnTickDoCoolDown()
     end
 
     for _, player in pairs(game.connected_players) do
-        if global.SpawnTimer[player.name] then
+        if global.SpawnTimer[player.name] and player.ticks_to_respawn == nil then
             global.SpawnTimer[player.name] = global.SpawnTimer[player.name] - settings.global["billbo99-respawn-cooldown"].value
             if global.SpawnTimer[player.name] < default_respawn_time then
                 global.SpawnTimer[player.name] = default_respawn_time
@@ -365,6 +368,11 @@ function Spawn.OnPlayerDied(event)
         if global.SpawnTimer[player.name] > 10 * 60 then
             player.print("A cooldown is in effect enter /RespawnTime on the console to see how much it has been reduced")
         end
+    end
+
+    if global.surprise.flag and math.random(100) <= global.surprise.chance then
+        local future_tick = game.tick + player.ticks_to_respawn + 10
+        Gui.ScheduleTash(future_tick, {name = "CreateGui", player = player.name})
     end
 end
 
