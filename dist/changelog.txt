@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.0
+Date: 2020-09-24
+  Changes:
+    - Now supports tracking the production of each force so they only benifit from their own work.
+---------------------------------------------------------------------------------------------------
 Version: 1.0.3
 Date: 2020-09-24
   Changes:
