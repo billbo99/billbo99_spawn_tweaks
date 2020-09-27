@@ -113,6 +113,20 @@ local function InitCheckList()
         Checks.secondary_gun[25] = {what_type = "secondary_gun", what = "acombat-shotgun", what_name = "Akimbo Combat Shotgun", done = false}
     end
 
+    if game and game.active_mods["SchmindustrialRevolution"] then
+        Checks.primary_ammo[5] = {what_type = "primary_ammo", what = "copper-magazine", what_name = "Copper magazine", done = false}
+        Checks.primary_ammo[15] = {what_type = "primary_ammo", what = "iron-magazine", what_name = "Iron magazine", done = false}
+        Checks.primary_ammo[25] = {what_type = "primary_ammo", what = "steel-magazine", what_name = "Steel magazine", done = false}
+        Checks.primary_ammo[35] = {what_type = "primary_ammo", what = "titanium-magazine", what_name = "Titanium magazine", done = false}
+        Checks.primary_ammo[45] = {what_type = "primary_ammo", what = "uranium-magazine", what_name = "Depleted uranium magazine", done = false}
+
+        Checks.secondary_ammo[5] = {what_type = "secondary_ammo", what = "copper-catridge", what_name = "Copper cartridge", done = false}
+        Checks.secondary_ammo[15] = {what_type = "secondary_ammo", what = "iron-catridge", what_name = "Iron cartridge", done = false}
+        Checks.secondary_ammo[15] = {what_type = "secondary_ammo", what = "steel-catridge", what_name = "Steel cartridge", done = false}
+        Checks.secondary_ammo[15] = {what_type = "secondary_ammo", what = "titanium-catridge", what_name = "Titanium cartridge", done = false}
+        Checks.secondary_ammo[15] = {what_type = "secondary_ammo", what = "uranium -catridge", what_name = "Depleted uranium cartridge", done = false}
+    end
+
     if game and game.active_mods["Krastorio2"] then
         Checks.primary_ammo[5] = {what_type = "primary_ammo", what = "rifle-magazine", what_name = "Rifle magazine", done = false}
         Checks.primary_ammo[15] = {what_type = "primary_ammo", what = "armor-piercing-rifle-magazine", what_name = "Armor piercing rifle magazine", done = false}
