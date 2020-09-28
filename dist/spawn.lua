@@ -1,4 +1,3 @@
-local Gui = require("scripts.gui")
 local Spawn = {}
 
 -- helper function
@@ -224,7 +223,6 @@ function Spawn.OnInit()
     global.SpawnTimer = global.SpawnTimer or {}
     global.SpawnItems = global.SpawnItems or {}
     global.SpawnForceItems = global.SpawnForceItems or {}
-    global.queue = global.queue or {}
     global.surprise = global.surprise or {flag = false, chance = 10}
 
     for _, force in pairs(game.forces) do
@@ -412,11 +410,6 @@ function Spawn.OnPlayerDied(event)
         if global.SpawnTimer[player.name] > 10 * 60 then
             player.print("A cooldown is in effect enter /RespawnTime on the console to see how much it has been reduced")
         end
-    end
-
-    if global.surprise.flag and math.random(100) <= global.surprise.chance then
-        local future_tick = game.tick + player.ticks_to_respawn + 10
-        Gui.ScheduleTash(future_tick, {name = "CreateGui", player = player.name})
     end
 end
 
