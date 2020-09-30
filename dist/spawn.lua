@@ -141,6 +141,10 @@ end
 
 function Spawn.OnTickDoCheckForSpawnGear()
     for _, force in pairs(game.forces) do
+        if global.SpawnForceItems[force.name] == nil then
+            Spawn.OnInit()
+        end
+
         local ref = global.SpawnForceItems[force.name]
 
         ref.Checks = InitCheckList()
